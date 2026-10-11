@@ -1,0 +1,21 @@
+# Copy to config.toml and edit.
+# This server does NOT connect to Oscar or its database. It only relays
+# room tasks between the physician's billing screen and reception.
+
+[server]
+bind = "0.0.0.0"
+port = 8765
+# Long random string; paste the same value into the userscript.
+#   python3 -c "import secrets; print(secrets.token_urlsafe(32))"
+api_token = "CHANGE_ME"
+# Only accept requests from these networks (your office's public IP / LAN).
+# Leave empty [] to allow any source (token still required).
+allowed_networks = []   # e.g. ["203.0.113.10/32", "192.168.0.0/24"]
+# Set true if running behind Caddy/nginx that sets X-Real-IP.
+behind_proxy = false
+sqlite_path = "roomflow.sqlite3"
+
+[tasks]
+dedupe_seconds = 600            # repeat click on the same appointment updates the open card
+expire_unacked_seconds = 14400  # unacknowledged cards disappear after 4 h
+keep_acked_seconds = 30         # acknowledged cards linger briefly so others see who took it
